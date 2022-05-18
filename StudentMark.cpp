@@ -8,7 +8,14 @@ using namespace std;
 float mark;
 string name;
 string nationalcode;
+float avg;
+float physicmark;
+float mathmark;
+float cheimsrymark;
+float avgmax = 0;
 fstream m;
+int cs = 0;
+
 void inputdata();
 void printdata();
 void Ncheck();
@@ -16,6 +23,8 @@ void checkmark();
 void inputName();
 int main()
 {
+	cout << "Please enter number of student :" <<endl;
+	cin >> cs;
 	inputdata();
 	printdata();
 
@@ -29,16 +38,45 @@ void printdata()
 	while (bank >> name)
 	{
 		bank >> nationalcode;
-		bank >> mark;
-		if (mark >= 15)
+		bank >> mathmark;
+		bank >> physicmark;
+		bank >> cheimsrymark;
+		bank >> avg;
+		
+		if (avg > avgmax)
+		{
+			avgmax = avg;
+			fstream h;
+			h.open("sample2.txt", ios::out);
+			h << name << endl;
+			h << nationalcode << endl;
+			h << mathmark << endl;
+			h << physicmark << endl;
+			h << cheimsrymark << endl;
+			h << avg << endl;
+		}
+		if (avg >= 0)
 		{
 			find = 1;
 			cout << endl;
-			cout << "Name is : " << name << "\t" << "Codemeli is : " << nationalcode << "\t" << "Moadel is :" << mark << endl;
-
+			cout << "Name is : " << name << "\t" << "Codemeli is : " << nationalcode << "\t" << "Math Mark is :" << mathmark << "\t" << "Physic Mark is :" << physicmark << "\t" << "Cheimsry Mark is :" << cheimsrymark << "\t" << "AVG is :" << avg << endl;
 		}
-
+		
 	}
+	ifstream bank2("sample2.txt");
+	{
+		bank2 >> name;
+		bank2 >> nationalcode;
+		bank2 >> mathmark;
+		bank2 >> physicmark;
+		bank2 >> cheimsrymark;
+		bank2 >> avg;
+		cout << endl;
+		cout << endl;
+		cout <<"Best Student" <<endl;
+		cout << "Name is : " << name << "\t" << "Math Mark is :" << mathmark << "\t" << "Physic Mark is :" << physicmark << "\t" << "Cheimsry Mark is :" << cheimsrymark << "\t" << "AVG is :" << avg << endl;
+	}
+
 	if (find = 0)
 	{
 		cout << "Any one can not ger mark great than 15" << endl;
@@ -49,7 +87,7 @@ void inputdata()
 {
 
 	m.open("sample.txt", ios::out);
-	for (int i = 1; i <= 3; i++)
+	for (int i = 1; i <= cs; i++)
 	{
 		inputName();
 		Ncheck();
@@ -114,23 +152,49 @@ void Ncheck()
 
 void checkmark()
 {
+	float sum = 0;
 	bool markFlag = 0;
-	do {
+	for (int i = 1; i <= 3; i++)
+	{
 
-		cout << "Please enter Mark" << endl;
-		cin >> mark;
+		do {
 
-		if (mark < 0 || mark >20)
-		{
-			cout << "Your Mark should be between 0-20" << endl;
-			markFlag = 0;
-		}
-		else
-		{
-			markFlag = 1;
-			m << mark << endl;
-		}
+			cout << "Please enter Mark " << i << endl;
+			cin >> mark;
 
-	 
-	}while (markFlag == 0);
+			if (mark < 0 || mark >20)
+			{
+				cout << "Your Mark should be between 0-20" << endl;
+				markFlag = 0;
+			}
+			else
+			{
+				markFlag = 1;
+				if (i == 1)
+				{
+					mathmark = mark;
+					m << mark << endl;
+				}
+				else if (i == 2)
+				{
+					physicmark = mark;
+					m << mark << endl;
+				}
+				else if (i == 3)
+				{
+					cheimsrymark = mark;
+					m << mark << endl;
+				}
+
+				sum = sum + mark;
+
+
+			}
+
+
+		} while (markFlag == 0);
+		
+	}
+	avg = sum / 3;
+	m << avg << endl;
 }
