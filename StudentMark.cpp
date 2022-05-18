@@ -21,17 +21,6 @@ int main()
 
 	return 0;
 }
-void inputdata()
-{
-
-	m.open("sample.txt", ios::out);
-	for (int i = 1; i <= 3; i++)
-	{
-		inputName();
-		Ncheck();
-		checkmark();
-	}
-}
 
 void printdata()
 {
@@ -55,6 +44,17 @@ void printdata()
 		cout << "Any one can not ger mark great than 15" << endl;
 	}
 
+}
+void inputdata()
+{
+
+	m.open("sample.txt", ios::out);
+	for (int i = 1; i <= 3; i++)
+	{
+		inputName();
+		Ncheck();
+		checkmark();
+	}
 }
 
 void inputName()
